@@ -10,8 +10,8 @@ jobs:
     # At a minimum this job should upload artifacts using actions/upload-pages-artifact
     runs-on: ubuntu-latest
     steps:
-      - run: actions/checkout@v4
-      - run: oven-sh/setup-bun@v2
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile && bun run build
       - uses: actions/upload-artifact@v4
         with:
