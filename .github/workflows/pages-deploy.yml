@@ -5,24 +5,8 @@ on:
       - master
 
 jobs:
-  # Build job
-  build:
-    # At a minimum this job should upload artifacts using actions/upload-pages-artifact
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install --frozen-lockfile && bun run build
-      - uses: actions/upload-artifact@v4
-        with:
-          name: github-pages
-          path: ./dist
-
   # Deploy job
   deploy:
-    # Add a dependency to the build job
-    needs: build
-
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
       pages: write # to deploy to Pages
@@ -36,6 +20,14 @@ jobs:
     # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile && bun run build
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: "./dist"
+      - uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
