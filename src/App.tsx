@@ -116,7 +116,7 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
   return (
     <div ref={ref} className="w-A4 h-A4 p-6 bg-white overflow-hidden">
       <div className="flex flex-row gap-4 items-center justify-between mb-4">
-        <h1 className="text-6xl font-bold font-montserrat text-transparent bg-clip-text inline-block bg-gradient-to-r from-sky-500 to-violet-500">
+        <h1 className="text-6xl font-bold font-montserrat antialiased text-transparent bg-clip-text inline-block bg-gradient-to-r from-sky-500 to-blue-500">
           Edward Jex
         </h1>
         <ul className="font-semibold text-lg content-end h-ful">
