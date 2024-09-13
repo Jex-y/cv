@@ -1,4 +1,5 @@
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Printer } from "lucide-react";
+import { forwardRef, type Ref, useRef } from "react";
 
 function Github() {
   return (
@@ -85,7 +86,7 @@ function Skill({ name, level, subskills, description }: SkillProps) {
   return (
     <div>
       <div className="flex items-center gap-2 justify-between">
-        <span className="font-semibold">{name}</span>
+        <h3 className="font-semibold">{name}</h3>
 
         <div className="h-2 w-32 bg-gray-400 rounded-lg">
           <div
@@ -94,11 +95,14 @@ function Skill({ name, level, subskills, description }: SkillProps) {
           />
         </div>
       </div>
-      <div className="ml-4">
+      <div className="ml-2">
         {subskills && (
-          <ul className="ml-4 list-disc text-sm">
+          <ul className="text-sm ml-0.5">
             {subskills.map((subskill) => (
-              <li key={subskill}>{subskill}</li>
+              <li key={subskill} className="flex items-center gap-2">
+                <div className="bg-gray-400 rounded-full h-1.5 w-1.5" />
+                <span>{subskill}</span>
+              </li>
             ))}
           </ul>
         )}
@@ -108,11 +112,13 @@ function Skill({ name, level, subskills, description }: SkillProps) {
   );
 }
 
-function CV() {
+const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
   return (
-    <div className="w-A4 h-A4 p-6 bg-white overflow-hidden">
+    <div ref={ref} className="w-A4 h-A4 p-6 bg-white overflow-hidden">
       <div className="flex flex-row gap-4 items-center justify-between mb-4">
-        <h1 className="text-5xl font-bold font-montserrat">Edward Jex</h1>
+        <h1 className="text-6xl font-bold font-montserrat text-transparent bg-clip-text inline-block bg-gradient-to-r from-sky-500 to-violet-500">
+          Edward Jex
+        </h1>
         <ul className="font-semibold text-lg content-end h-ful">
           <li>
             <IconLink icon={<Mail />} href="mailto:edwardjex@live.co.uk">
@@ -179,7 +185,7 @@ function CV() {
               subtitle="Computer Science MEng"
               date="2021 - 2025"
             >
-              <p className="text-sm mx-2">
+              <p className="text-sm ml-2">
                 On track for a first class degree. Modules include: Deep /
                 Reinforement Learning, Advanced Computer Vision, Advanced
                 Algorithms, Quantum Computing, and Parallel Scientific
@@ -200,7 +206,7 @@ function CV() {
               subtitle="Department of Computer Science"
               date="2023 - 2024"
             >
-              <p className="text-sm mx-2">
+              <p className="text-sm ml-2">
                 I assist in the delivery of the 1<sup>st</sup> and{" "}
                 <sup>2nd</sup> year computer science courses by running lab
                 sessions. This involves helping students with weekly
@@ -215,7 +221,7 @@ function CV() {
               subtitle="Webex Web Client"
               date="Summer 2022"
             >
-              <p className="text-sm mx-2">
+              <p className="text-sm ml-2">
                 I worked on the Webex web client team, developing new features
                 and fixing bugs. Through this I gained experience with React and
                 Redux and learned how to work on software as part of a team.
@@ -227,15 +233,14 @@ function CV() {
               subtitle="Trevelyan College Boat Club"
               date="2023 - 2024"
             >
-              <p className="text-sm mx-2">
-                After having been the club treasurer for a year, I was elected
-                as president in my third year. This role encompassed running the
-                finances of the club, organizing training and racing events, and
-                managing the other members of the committee. Over the year, we
-                succeeded in replacing aging equipment, increasing the number of
-                members, and improving the club's racing performance. This role
-                pushed me to develop my leadership, organization, time, project,
-                and team managment skills, all of which are transferable to a
+              <p className="text-sm ml-2">
+                This role encompassed running the finances of the club,
+                organizing training and racing events, and managing the other
+                members of the committee. Over the year, we succeeded in
+                replacing aging equipment, increasing the number of members, and
+                improving the club's racing performance. This role pushed me to
+                develop my leadership, organization, time, project, and team
+                managment skills, all of which are transferable to a
                 professional environment.
               </p>
             </Experience>
@@ -244,7 +249,7 @@ function CV() {
               subtitle="Trevelyan College Boat Club"
               date="2024 - 2025"
             >
-              <p className="text-sm mx-2">
+              <p className="text-sm ml-2">
                 As webmaster, I was responsible for maintaining and updating the
                 DCR website. I used this opportunity to deploy a long term
                 personal project of mine: a river level prediction model and
@@ -264,14 +269,31 @@ function CV() {
       </div>
     </div>
   );
-}
+});
+
+import { useReactToPrint } from "react-to-print";
 
 function App() {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    content: () => contentRef.current,
+    documentTitle: "CV - Edward Jex",
+  });
+
   return (
     <>
       <div className="flex content-center w-full h-full bg-zinc-800">
         <div className="mx-auto my-auto shadow-lg rounded-lg inline-block">
-          <CV />
+          <CV ref={contentRef} />
+        </div>
+        <div className="absolute bottom-10 right-10">
+          <button
+            onClick={handlePrint}
+            type="button"
+            className="bg-zinc-500 text-white p-2 rounded-lg m-2 h-10"
+          >
+            <Printer />
+          </button>
         </div>
       </div>
     </>
