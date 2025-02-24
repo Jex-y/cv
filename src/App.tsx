@@ -57,17 +57,17 @@ function Section({
 
 type ExperienceProps = {
         title: string;
-        date: string;
+        date?: string;
         subtitle?: string;
         children?: React.ReactNode;
 };
 
 function Experience({ title, date, subtitle, children }: ExperienceProps) {
         return (
-                <div className="my-4">
+                <div className="my-2">
                         <div className="flex items-center justify-between gap-2">
                                 <h3 className="font-bold">{title}</h3>
-                                <span>{date}</span>
+                                {date && <span>{date}</span>}
                         </div>
                         {subtitle && <p className="text-gray-600">{subtitle}</p>}
                         {children && <div>{children}</div>}
@@ -114,7 +114,7 @@ function Skill({ name, level, subskills, description }: SkillProps) {
 
 const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
         return (
-                <div ref={ref} className="w-A4 h-A4 p-6 bg-white overflow-hidden">
+                <div ref={ref} className="w-B4 h-B4 p-6 bg-white overflow-hidden">
                         <div className="flex flex-row gap-4 items-center justify-between mb-4">
                                 <h1 className="text-6xl font-bold font-montserrat antialiased text-transparent bg-clip-text inline-block bg-gradient-to-r from-sky-500 to-blue-500">
                                         Edward Jex
@@ -138,41 +138,55 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                 </ul>
                         </div>
                         <p className="mb-2">
-                                I am a 4th year Computer Science student at Durham University with
-                                industry experience in software development. For my integrated masters
-                                project, I am researching the effect of different energy saving
-                                techniques on the performance of CNN's deployed on edge devices. My
-                                interests include machine learning, web development, and data science
-                                and I often work on personal projects in these areas. Most recently I
-                                have used deep learning to{" "}
+                                I am a 4th year MEng Computer Science student at Durham University with
+                                industry experience in software development.
+                                <br />
+                                For my final project, I am researching energy-efficient deep learning
+                                object detection on edge devices for robotics.
+                                <br />
+                                My interests include edge / tiny scale deep learning for computer vision
+                                and reinforcement learning. I often work on personal projects e.g. using
+                                deep learning to{" "}
                                 <a href="https://river.edjex.dev" className="text-link hover:underline">
                                         {" "}
                                         forecast the river level
                                 </a>{" "}
-                                in Durham. I am seeking a graduate role.
+                                in Durham.
                         </p>
                         <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
                                         <Section title="Skills">
                                                 <Skill
-                                                        name="Data Science"
-                                                        level={90}
+                                                        name="Deep Learning"
+                                                        level={100}
                                                         subskills={[
-                                                                "ML / DL with Pytorch, JAX, and Scikit-learn",
-                                                                "Data analysis with Pandas / Polars and NumPy",
-                                                                "Visualization with Matplotlib and Seaborn + web technologies",
+                                                                "Proficient with Pytorch and Scikit-learn, some experience with JAX",
+                                                                "Computer Vision: Theoretical and practical work with SOTA models for classification, object detection, and segmentation",
+                                                                "Generative Models: Build and trained small transformers for image diffusion, classification, unpaired image to image / video to video transfer(Cycle-GAN / MoCycle-GAN)",
+                                                                "Reinfocement Learning: Understaning and implementation of SOTA algorithms for continous environments. Experience with both model-free and model-based methods with MCTS.",
+                                                                "Edge deployment: Deployment to Hailo accelerators and CPU targets. Experience with NAS, quantization, and pruning.",
+                                                                "Hardware Aware Model Development: Experience measuring energy usage and throughput on edge devices",
                                                         ]}
-                                                        description="Skills developed and proven through university coursework and personal projects"
+                                                        description="Skills developed and proven through university coursework, final project and personal projects"
+                                                />
+                                                <Skill
+                                                        name="Rust"
+                                                        level={95}
+                                                        subskills={[
+                                                                "Deep learning model deployment with ONNX runtime",
+                                                                "Web service development with Axum",
+                                                        ]}
+                                                        description="I have experience with Rust through personal projects."
                                                 />
                                                 <Skill
                                                         name="Web Development"
-                                                        level={80}
+                                                        level={90}
                                                         subskills={["Typescript, React, Redux, Next.js, TailwindCSS"]}
                                                         description="I have experience building web applications with modern technologies. This CV is built with React and TailwindCSS."
                                                 />
                                                 <Skill
                                                         name="DevOps"
-                                                        level={80}
+                                                        level={90}
                                                         subskills={[
                                                                 "Continous Integration and Deployment",
                                                                 "GCP and AWS + Infrastructure as Code",
@@ -180,9 +194,11 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                                         ]}
                                                         description="At Cisco I worked with CI/CD pipelines on Jenkins. For each of my personal projects I aim to build CI/CD pipelines and deploy to cloud platforms."
                                                 />
-                                                <Skill name="Rust" level={70} />
-                                                <Skill name="C/C++" level={50} />
-                                                <Skill name="Java" level={50} />
+                                                <Skill
+                                                        name="C/C++"
+                                                        level={75}
+                                                        description="Experience with C/C++ from university coursework."
+                                                />
                                         </Section>
                                         <Section title="Education">
                                                 <Experience
@@ -191,10 +207,11 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                                         date="2021 - 2025"
                                                 >
                                                         <p className="text-sm ml-2">
-                                                                On track for a first class degree. Modules include: Deep /
-                                                                Reinforement Learning, Advanced Computer Vision, Advanced
-                                                                Algorithms, Quantum Computing, and Parallel Scientific
-                                                                Computing.
+                                                                On track for a first class degree. Modules include: Deep
+                                                                Learning (90%), Reinforcement Learning (90%), Computer Vision
+                                                                (80%), Advanced Computer Vision (75%), Advanced Algorithms
+                                                                (TBC), Quantum Computing (TBC), and Parallel Scientific
+                                                                Computing (83%).
                                                         </p>
                                                 </Experience>
                                                 <Experience
@@ -204,17 +221,47 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                                 />
                                         </Section>
                                 </div>
-                                <div className="grid gap-4">
+                                <div className="grid gap-2">
+                                        <Section title="Projects">
+                                                <Experience title="Energy Efficient Deep Learning Object Detection on Edge Devices">
+                                                        <p className="text-sm ml-2">
+                                                                For my final year project, I am analysing the energy usage of
+                                                                object detection model on a Hailo 8L accelerator. I am using NAS
+                                                                to identify architectures that minimise energy per frame. To
+                                                                implement the NAS pipleline I have used Pytorch and Ray to
+                                                                distribute the training, compilation for the accelerator, and
+                                                                power evaluation of models over several machines with different
+                                                                resources.
+                                                        </p>
+                                                </Experience>
+
+                                                <Experience title="River Level Forecasting">
+                                                        <p className="text-sm ml-2">
+                                                                I developed and deployed a deep learning model that forecasts
+                                                                the river level in Durham. The predictions can be viewed through
+                                                                a{" "}
+                                                                <a
+                                                                        href="https://river.edjex.dev"
+                                                                        className="text-link hover:underline"
+                                                                >
+                                                                        web dashboard
+                                                                </a>
+                                                                . This allows clubs to make informed decisions about when to
+                                                                schedule rowing sessions. The model is run using ONNX runtime
+                                                                and a Rust web server.
+                                                        </p>
+                                                </Experience>
+                                        </Section>
                                         <Section title="Experience">
                                                 <Experience
                                                         title="Undergraduate Teaching Assistant"
                                                         subtitle="Department of Computer Science"
-                                                        date="2023 - 2024"
+                                                        date="2023 - 2025"
                                                 >
                                                         <p className="text-sm ml-2">
-                                                                I assist in the delivery of the 1<sup>st</sup> and{" "}
-                                                                <sup>2nd</sup> year computer science courses by running lab
-                                                                sessions. This involves helping students with weekly
+                                                                I assist in the delivery of the 1<sup>st</sup> year Computation
+                                                                Thinking and <sup>2nd</sup> year Networks and Systems courses by
+                                                                running lab sessions. This involves helping students with weekly
                                                                 assignments, answering questions, and explaining concepts.
                                                                 Students have a wide range of abilities and backgrounds,
                                                                 requiring me to be able to explain concepts in multiple ways and
@@ -230,6 +277,10 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                                                 I worked on the Webex web client team, developing new features
                                                                 and fixing bugs. Through this I gained experience with React and
                                                                 Redux and learned how to work on software as part of a team.
+                                                                Specific achievements include overhauling the implementation of
+                                                                rich message content, migrating the build system, and
+                                                                implementation of several UI components to a design
+                                                                specification.
                                                         </p>
                                                 </Experience>
 
@@ -245,28 +296,18 @@ const CV = forwardRef((_props, ref: Ref<HTMLDivElement>) => {
                                                                 replacing aging equipment, increasing the number of members, and
                                                                 improving the club's racing performance. This role pushed me to
                                                                 develop my leadership, organization, time, project, and team
-                                                                managment skills, all of which are transferable to a
+                                                                management skills, all of which are transferable to a
                                                                 professional environment.
                                                         </p>
                                                 </Experience>
                                                 <Experience
                                                         title="Durham College Rowing Webmaster"
-                                                        subtitle="Trevelyan College Boat Club"
+                                                        subtitle="Durham College Rowing"
                                                         date="2024 - 2025"
                                                 >
                                                         <p className="text-sm ml-2">
-                                                                As webmaster, I was responsible for maintaining and updating the
-                                                                DCR website. I used this opportunity to deploy a long term
-                                                                personal project of mine: a river level prediction model and
-                                                                <a
-                                                                        href="https://river.edjex.dev"
-                                                                        className="text-link hover:underline"
-                                                                >
-                                                                        {" "}
-                                                                        web dashboard
-                                                                </a>
-                                                                . This allows clubs to make informed decisions about whether it
-                                                                is safe to row on the river.
+                                                                As webmaster, I am responsible for maintaining and updating the
+                                                                DCR website.
                                                         </p>
                                                 </Experience>
                                         </Section>
@@ -287,7 +328,7 @@ function App() {
 
         return (
                 <>
-                        <div className="flex content-center w-full h-full bg-zinc-800">
+                        <div className="flex content-center w-full min-h-full py-10">
                                 <div className="mx-auto my-auto shadow-lg rounded-lg inline-block">
                                         <CV ref={contentRef} />
                                 </div>
